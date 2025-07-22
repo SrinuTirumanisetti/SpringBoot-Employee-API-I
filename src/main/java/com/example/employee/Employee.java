@@ -1,6 +1,6 @@
 // Write your code here
 
-package com.example.employee.model;
+package com.example.employee;
 
 public class Employee{
     
@@ -44,7 +44,7 @@ public class Employee{
         return department;
     }
 
-    public void setDepartment(Strinf department){
+    public void setDepartment(String department){
         this.department = department;
     }
 }

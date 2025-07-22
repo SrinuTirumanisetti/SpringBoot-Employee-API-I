@@ -11,11 +11,13 @@ package com.example.employee;
 
 import com.example.employee.Employee;
 import com.example.employee.EmployeeRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.*;
 
 // Do not modify the below code
 
+@Service
 public class EmployeeService implements EmployeeRepository {
 
     private static HashMap<Integer, Employee> employeeList = new HashMap<>();
@@ -33,5 +35,9 @@ public class EmployeeService implements EmployeeRepository {
     // Do not modify the above code
 
     // Write your code here
-
+    @Override
+    public ArrayList<Employee> getEmployees(){
+        Collection<Employee> employees = employeeList.values();
+        return new ArrayList<>(employees);
+    }
 }
