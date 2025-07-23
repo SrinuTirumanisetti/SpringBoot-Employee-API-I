@@ -12,6 +12,8 @@ package com.example.employee;
 import com.example.employee.Employee;
 import com.example.employee.EmployeeRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
+import org.springframework.http.HttpStatus;
 
 import java.util.*;
 
@@ -48,5 +50,14 @@ public class EmployeeService implements EmployeeRepository {
         employeeList.put(uniqueId, employee);;      
         uniqueId++;                  
         return employee;                  
+    }
+
+    @Override
+    public Employee getEmployeeById(int employeeId) {
+        Employee employee = employeeList.get(employeeId);
+        if (employee == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Employee not found");
+        }
+        return employee;
     }
 }
