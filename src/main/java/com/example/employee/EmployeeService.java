@@ -21,6 +21,7 @@ import java.util.*;
 public class EmployeeService implements EmployeeRepository {
 
     private static HashMap<Integer, Employee> employeeList = new HashMap<>();
+    private int uniqueId = 7;
 
     public EmployeeService() {
         employeeList.put(1, new Employee(1, "John Doe", "johndoe@example.com", "Marketing"));
@@ -39,5 +40,13 @@ public class EmployeeService implements EmployeeRepository {
     public ArrayList<Employee> getEmployees(){
         Collection<Employee> employees = employeeList.values();
         return new ArrayList<>(employees);
+    }
+
+    @Override
+    public Employee addEmployee(Employee employee) {
+        employee.setEmployeeId(uniqueId); 
+        employeeList.put(uniqueId, employee);;      
+        uniqueId++;                  
+        return employee;                  
     }
 }

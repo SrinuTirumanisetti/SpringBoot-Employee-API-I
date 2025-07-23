@@ -6,4 +6,5 @@ import com.example.employee.Employee;
 
 public interface EmployeeRepository{
     ArrayList<Employee> getEmployees();
+    Employee addEmployee(Employee employee);
 }
