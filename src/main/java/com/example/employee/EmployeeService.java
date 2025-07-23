@@ -60,4 +60,19 @@ public class EmployeeService implements EmployeeRepository {
         }
         return employee;
     }
+
+    @Override
+    public Employee updateEmployee(int employeeId,Employee employee){
+        Employee existingEmployee = getEmployeeById(employeeId);
+        if(employee.getEmployeeName()!=null){
+            existingEmployee.setEmployeeName(employee.getEmployeeName());
+        }
+        if(employee.getEmail()!=null){
+            existingEmployee.setEmail(employee.getEmail());
+        }
+        if(employee.getDepartment()!=null){
+            existingEmployee.setDepartment(employee.getDepartment());
+        }
+        return getEmployeeById(employeeId);
+    }
 }
