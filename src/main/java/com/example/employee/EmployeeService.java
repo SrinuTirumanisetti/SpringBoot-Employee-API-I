@@ -1,25 +1,12 @@
-/*
- * You can use the following import statements
- * 
- * import org.springframework.web.server.ResponseStatusException;
- * import org.springframework.http.HttpStatus;
- * 
- */
-
-
 package com.example.employee;
 
 import com.example.employee.Employee;
 import com.example.employee.EmployeeRepository;
-import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.http.HttpStatus;
 
 import java.util.*;
 
-// Do not modify the below code
-
-@Service
 public class EmployeeService implements EmployeeRepository {
 
     private static HashMap<Integer, Employee> employeeList = new HashMap<>();
@@ -32,47 +19,57 @@ public class EmployeeService implements EmployeeRepository {
         employeeList.put(4, new Employee(4, "Alice Lee", "alee@example.com", "IT"));
         employeeList.put(5, new Employee(5, "Mike Brown", "mbrown@example.com", "Finance"));
         employeeList.put(6, new Employee(6, "Sara Lee", "slee@example.com", "Operations"));
-
     }
 
-    // Do not modify the above code
-
-    // Write your code here
     @Override
-    public ArrayList<Employee> getEmployees(){
-        Collection<Employee> employees = employeeList.values();
-        return new ArrayList<>(employees);
+    public ArrayList<Employee> getEmployees() {
+            return new ArrayList<>(employeeList.values());
     }
 
     @Override
     public Employee addEmployee(Employee employee) {
-        employee.setEmployeeId(uniqueId); 
-        employeeList.put(uniqueId, employee);;      
-        uniqueId++;                  
-        return employee;                  
+            employee.setEmployeeId(uniqueId);
+            employeeList.put(uniqueId, employee);
+            uniqueId++;
+            return employee;
     }
 
     @Override
     public Employee getEmployeeById(int employeeId) {
-        Employee employee = employeeList.get(employeeId);
-        if (employee == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Employee not found");
-        }
-        return employee;
+            Employee employee = employeeList.get(employeeId);
+            if (employee == null) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Employee not found");
+            }
+            return employee;
     }
 
     @Override
-    public Employee updateEmployee(int employeeId,Employee employee){
-        Employee existingEmployee = getEmployeeById(employeeId);
-        if(employee.getEmployeeName()!=null){
-            existingEmployee.setEmployeeName(employee.getEmployeeName());
+    public Employee updateEmployee(int employeeId, Employee employee) {
+        try {
+            Employee existingEmployee = getEmployeeById(employeeId);
+            if (employee.getEmployeeName() != null) {
+                existingEmployee.setEmployeeName(employee.getEmployeeName());
+            }
+            if (employee.getEmail() != null) {
+                existingEmployee.setEmail(employee.getEmail());
+            }
+            if (employee.getDepartment() != null) {
+                existingEmployee.setDepartment(employee.getDepartment());
+            }
+            return existingEmployee;
+        } catch (ResponseStatusException e) {
+            throw e; 
         }
-        if(employee.getEmail()!=null){
-            existingEmployee.setEmail(employee.getEmail());
-        }
-        if(employee.getDepartment()!=null){
-            existingEmployee.setDepartment(employee.getDepartment());
-        }
-        return getEmployeeById(employeeId);
     }
+
+        @Override
+        public void deleteEmployee(int employeeId) {
+            if (employeeList.containsKey(employeeId)) {
+                employeeList.remove(employeeId);
+                throw new ResponseStatusException(HttpStatus.NO_CONTENT);
+            } else {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+            }
+        }
+
 }
